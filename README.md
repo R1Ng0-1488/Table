@@ -2,4 +2,4 @@
 One table
 
 to start - docker-compose up --build
-http://localhost:8080/
+to see - http://localhost:8080/
