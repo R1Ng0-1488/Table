@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    env_file:
+      - ./.env.dev
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  vue:
+    build:
+      context: ./templates/table-vue
+    command: npm run dev
+    ports:
+      - 8080:8080
+    volumes:
+      - vue_dist:/app/dist
+    depends_on:
+      - web
+    env_file:
+      - ./.env.dev
+
+
+volumes:
+  postgres_data:
+  vue_dist:
